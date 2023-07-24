@@ -3,6 +3,7 @@ import BaseInput from "./BaseInput.vue";
 import BaseModal from "./BaseModal.vue";
 import Item from "./Item.vue";
 import { useTodoList } from "./../composable";
+import { BACKLOG, DONE, TEST, TODO, PROGRESS } from "./../constants";
 
 const {
   termValue,
@@ -34,7 +35,7 @@ const {
     >
       <div
         class="col-span-1 bg-slate-200 p-2"
-        @drop="handleDrop($event, 'backlog')"
+        @drop="handleDrop($event, BACKLOG)"
         @dragover.prevent
         @dragenter.prevent
       >
@@ -51,7 +52,7 @@ const {
       </div>
       <div
         class="col-span-1 bg-slate-200 p-2"
-        @drop="handleDrop($event, 'todo')"
+        @drop="handleDrop($event, TODO)"
         @dragover.prevent
         @dragenter.prevent
       >
@@ -68,7 +69,7 @@ const {
       </div>
       <div
         class="col-span-1 bg-slate-200 p-2"
-        @drop="handleDrop($event, 'progress')"
+        @drop="handleDrop($event, PROGRESS)"
         @dragover.prevent
         @dragenter.prevent
       >
@@ -85,7 +86,7 @@ const {
       </div>
       <div
         class="col-span-1 bg-slate-200 p-2"
-        @drop="handleDrop($event, 'test')"
+        @drop="handleDrop($event, TEST)"
         @dragover.prevent
         @dragenter.prevent
       >
@@ -102,7 +103,7 @@ const {
       </div>
       <div
         class="col-span-1 bg-slate-200 p-2"
-        @drop="handleDrop($event, 'done')"
+        @drop="handleDrop($event, DONE)"
         @dragover.prevent
         @dragenter.prevent
       >

@@ -2,16 +2,8 @@ import { ref } from "vue";
 import { useTodoListStore } from "./../store";
 import { storeToRefs } from "pinia";
 import { nanoid } from "nanoid";
-
-type Status = "backlog" | "todo" | "progress" | "test" | "done";
-
-interface TodoItem {
-  id: string;
-  title: string;
-  status: Status;
-  createdAt: string;
-  deletedAt: string | null;
-}
+import { TodoItem, Status } from "types";
+import { BACKLOG } from "./../constants";
 
 export const useTodoList = () => {
   const store = useTodoListStore();
@@ -27,7 +19,7 @@ export const useTodoList = () => {
     if (termValue.value) {
       const payload: TodoItem = {
         title: termValue.value,
-        status: "backlog",
+        status: BACKLOG,
         id: nanoid(),
         createdAt: new Date().toISOString(),
         deletedAt: null,

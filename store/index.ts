@@ -1,14 +1,6 @@
 import { defineStore } from "pinia";
-
-type Status = "backlog" | "todo" | "progress" | "test" | "done";
-
-interface TodoItem {
-  id: string;
-  title: string;
-  status: Status;
-  createdAt: string;
-  deletedAt: string | null;
-}
+import { BACKLOG, DONE, TEST, TODO, PROGRESS } from "./../constants";
+import { TodoItem } from "types";
 
 export const useTodoListStore = defineStore("todolist", {
   state: () => ({
@@ -16,15 +8,15 @@ export const useTodoListStore = defineStore("todolist", {
   }),
   getters: {
     backlogs: (state) =>
-      state.todoItems.filter((el) => el.status === "backlog" && !el.deletedAt),
+      state.todoItems.filter((el) => el.status === BACKLOG && !el.deletedAt),
     todos: (state) =>
-      state.todoItems.filter((el) => el.status === "todo" && !el.deletedAt),
+      state.todoItems.filter((el) => el.status === TODO && !el.deletedAt),
     progresses: (state) =>
-      state.todoItems.filter((el) => el.status === "progress" && !el.deletedAt),
+      state.todoItems.filter((el) => el.status === PROGRESS && !el.deletedAt),
     tests: (state) =>
-      state.todoItems.filter((el) => el.status === "test" && !el.deletedAt),
+      state.todoItems.filter((el) => el.status === TEST && !el.deletedAt),
     dones: (state) =>
-      state.todoItems.filter((el) => el.status === "done" && !el.deletedAt),
+      state.todoItems.filter((el) => el.status === DONE && !el.deletedAt),
   },
 
   actions: {

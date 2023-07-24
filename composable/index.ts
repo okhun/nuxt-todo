@@ -1,0 +1,89 @@
+import { ref } from "vue";
+import { useTodoListStore } from "./../store";
+import { storeToRefs } from "pinia";
+import { nanoid } from "nanoid";
+
+type Status = "backlog" | "todo" | "progress" | "test" | "done";
+
+interface TodoItem {
+  id: string;
+  title: string;
+  status: Status;
+  createdAt: string;
+  deletedAt: string | null;
+}
+
+export const useTodoList = () => {
+  const store = useTodoListStore();
+  const { backlogs, todos, progresses, tests, dones, todoItems } =
+    storeToRefs(store);
+  const { addTodoItem } = store;
+  const termValue = ref("");
+  const editTerm = ref("");
+  const editItem = ref<TodoItem>();
+  const modalOpen = ref(false);
+
+  const handleAddItem = () => {
+    if (termValue.value) {
+      const payload: TodoItem = {
+        title: termValue.value,
+        status: "backlog",
+        id: nanoid(),
+        createdAt: new Date().toISOString(),
+        deletedAt: null,
+      };
+      addTodoItem(payload);
+      termValue.value = "";
+    }
+  };
+
+  const handleEditItem = (item: TodoItem) => {
+    editTerm.value = item.title;
+    editItem.value = item;
+    modalOpen.value = true;
+  };
+
+  const handleDeleteItem = (item: TodoItem) => {
+    todoItems.value = todoItems.value.map((el) =>
+      el.id === item?.id ? { ...el, deletedAt: new Date().toISOString() } : el
+    );
+  };
+
+  const handleSaveItem = () => {
+    todoItems.value = todoItems.value.map((el) =>
+      el.id === editItem.value?.id ? { ...el, title: editTerm.value } : el
+    );
+  };
+
+  const handleStartDrag = (evt: any, item: TodoItem) => {
+    evt.dataTransfer.dropEffect = "move";
+    evt.dataTransfer.effectAllowed = "move";
+    evt.dataTransfer.setData("itemID", item.id);
+  };
+
+  const handleDrop = (evt: any, list: Status) => {
+    const itemID = evt.dataTransfer.getData("itemID");
+    const item = todoItems.value.find((item) => item.id == itemID);
+
+    if (item) item.status = list;
+  };
+
+  return {
+    termValue,
+    backlogs,
+    modalOpen,
+    editTerm,
+    editItem,
+    todos,
+    progresses,
+    tests,
+    dones,
+    todoItems,
+    handleAddItem,
+    handleEditItem,
+    handleDeleteItem,
+    handleSaveItem,
+    handleStartDrag,
+    handleDrop,
+  };
+};

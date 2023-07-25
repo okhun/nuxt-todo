@@ -7,8 +7,7 @@ import { BACKLOG } from "./../constants";
 
 export const useTodoList = () => {
   const store = useTodoListStore();
-  const { backlogs, todos, progresses, tests, dones, todoItems } =
-    storeToRefs(store);
+  const { todoItems, lists } = storeToRefs(store);
   const { addTodoItem } = store;
   const termValue = ref("");
   const editTerm = ref("");
@@ -62,14 +61,10 @@ export const useTodoList = () => {
 
   return {
     termValue,
-    backlogs,
     modalOpen,
     editTerm,
     editItem,
-    todos,
-    progresses,
-    tests,
-    dones,
+    lists,
     todoItems,
     handleAddItem,
     handleEditItem,

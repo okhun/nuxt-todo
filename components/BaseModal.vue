@@ -26,7 +26,9 @@ const handleSave = () => {
           class="w-96 m-auto p-4 bg-white rounded transition-all duration-300 ease-in"
         >
           <div class="flex justify-end">
-            <button @click="modalOpen = false">Close</button>
+            <BaseButton @click="modalOpen = false" variant="danger"
+              >Close</BaseButton
+            >
           </div>
           <div class="my-4">
             <p class="mb-4">Edit Item</p>
@@ -34,12 +36,9 @@ const handleSave = () => {
           </div>
 
           <div class="flex justify-end">
-            <button
-              class="p-2 bg-blue-500 text-white rounded"
-              @click="handleSave"
+            <BaseButton @click="handleSave" data-test="modal-save"
+              >Save</BaseButton
             >
-              Save
-            </button>
           </div>
         </div>
       </div>

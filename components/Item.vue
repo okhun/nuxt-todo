@@ -1,12 +1,21 @@
 <script setup lang="ts">
 defineProps<{
-  item: { title: string; id: string; status: string; createdAt: string };
+  item: {
+    title: string;
+    id: string;
+    status: string;
+    createdAt: string;
+  };
+  dataTest: string;
 }>();
 const emit = defineEmits(["edit", "delete"]);
 </script>
 
 <template>
-  <div class="relative bg-white border mb-2 p-4 rounded flex gap-2 group">
+  <div
+    class="relative bg-white border mb-2 p-4 rounded flex gap-2 group"
+    :data-test="dataTest"
+  >
     <div class="truncate">
       <p class="truncate">
         {{ item.title }}
@@ -19,8 +28,15 @@ const emit = defineEmits(["edit", "delete"]);
     <div
       class="absolute right-2 bg-white p-2 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-200"
     >
-      <button @click="emit('edit')">Edit</button>
-      <button @click="emit('delete')">Delete</button>
+      <BaseButton :data-test="`${dataTest}-edit`" @click="emit('edit')"
+        >Edit</BaseButton
+      >
+      <BaseButton
+        @click="emit('delete')"
+        :data-test="`${dataTest}-delete`"
+        variant="danger"
+        >Delete</BaseButton
+      >
     </div>
   </div>
 </template>
